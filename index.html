@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>ST NICHOLAS Boys CYO – vs Ottawa (11/30)</title>
+
+    <!-- Inline CSS -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, #12264f 0, #050713 45%, #000000 100%);
+            color: #f5f5f5;
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 24px auto 40px;
+            padding: 24px;
+            border-radius: 18px;
+            background: rgba(8, 11, 27, 0.96);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 12px;
+        }
+
+        .title-main {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #ffca28;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0 4px;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(33, 63, 124, 0.6);
+        }
+
+        .tag.secondary {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin: 12px 0 20px;
+            font-size: 0.95rem;
+        }
+
+        .summary-card {
+            flex: 1 1 220px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: linear-gradient(120deg, rgba(25, 55, 109, 0.35), rgba(255, 202, 40, 0.18));
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .summary-card h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin: 0 0 6px;
+            opacity: 0.8;
+        }
+
+        .summary-card .stat-line {
+            font-size: 1.05rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.93rem;
+        }
+
+        thead {
+            background: linear-gradient(90deg, rgba(18, 40, 92, 0.98), rgba(26, 49, 104, 0.98));
+        }
+
+        thead th {
+            padding: 8px 8px;
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.75rem;
+        }
+
+        tbody tr {
+            transition: background 140ms ease, transform 120ms ease, box-shadow 120ms ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tbody tr:nth-child(odd) {
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        tbody td {
+            padding: 7px 8px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        tbody td.player-name {
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        tfoot td {
+            padding: 9px 8px;
+            text-align: center;
+            font-weight: 700;
+            border-top: 2px solid rgba(255, 255, 255, 0.45);
+            background: rgba(17, 43, 94, 0.92);
+        }
+
+        tfoot td:first-child {
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.8rem;
+        }
+
+        .leaders-highlight {
+            background: rgba(255, 214, 64, 0.20) !important;
+            box-shadow: 0 0 0 1px rgba(255, 214, 64, 0.8);
+        }
+
+        .row-active {
+            transform: translateY(-1px);
+            background: rgba(255, 214, 64, 0.18) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 18px 0 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(7, 19, 53, 0.85);
+            color: #fff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            cursor: pointer;
+            transition: background 130ms ease, transform 120ms ease, box-shadow 120ms ease;
+        }
+
+        .btn:hover {
+            background: rgba(255, 214, 64, 0.22);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.55);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .btn small {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .detail-panel {
+            margin-top: 16px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(1, 4, 18, 0.55);
+            font-size: 0.9rem;
+            min-height: 40px;
+        }
+
+        .detail-panel span.name {
+            font-weight: 700;
+            color: #ffeb3b;
+        }
+
+        @media (max-width: 720px) {
+            .page {
+                margin: 10px;
+                padding: 16px;
+            }
+
+            .title-main {
+                font-size: 1.55rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            thead th {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header class="header">
+        <div>
+            <div class="title-main">ST NICHOLAS BOYS CYO</div>
+            <div class="subtitle">Box Score vs Ottawa &bull; November 30 &bull; HOME</div>
+
+            <div class="tag-row">
+                <div class="tag">St Nicholas 77 pts</div>
+                <div class="tag secondary">Opponent: Ottawa</div>
+                <div class="tag secondary">Location: Home</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="summary">
+        <div class="summary-card">
+            <h3>Team Shooting</h3>
+            <div class="stat-line">
+                FG: <strong>31 / 67</strong> &nbsp;(<strong>46.3%</strong>)<br/>
+                3PT: <strong>12 / 34</strong> &nbsp;(<strong>35.3%</strong>)
+            </div>
+        </div>
+        <div class="summary-card">
+            <h3>Team Totals</h3>
+            <div class="stat-line">
+                PTS: <strong>77</strong> &nbsp;&bull;&nbsp;
+                REB: <strong>46</strong> &nbsp;&bull;&nbsp;
+                AST: <strong>18</strong><br/>
+                STL: <strong>16</strong> &nbsp;&bull;&nbsp;
+                BLK: <strong>2</strong>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="controls">
+            <div class="controls-left">
+                <button id="toggleLeadersBtn" class="btn">
+                    Highlight Stat Leaders
+                    <small>(Pts / Reb / Ast / Stl / Blk)</small>
+                </button>
+            </div>
+            <div>
+                <small>Tip: click a player row to see a quick summary.</small>
+            </div>
+        </div>
+
+        <table id="statsTable">
+            <thead>
+            <tr>
+                <th>Player</th>
+                <th>FG</th>
+                <th>3PT</th>
+                <th>PTS</th>
+                <th>REB</th>
+                <th>AST</th>
+                <th>STL</th>
+                <th>BLK</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-player="Wilhelm" data-fg-made="4" data-fg-att="8" data-3p-made="4" data-3p-att="7"
+                data-pts="14" data-reb="6" data-ast="0" data-stl="2" data-blk="0">
+                <td class="player-name">Wilhelm</td>
+                <td>4&nbsp;/&nbsp;8</td>
+                <td>4&nbsp;/&nbsp;7</td>
+                <td>14</td>
+                <td>6</td>
+                <td>0</td>
+                <td>2</td>
+                <td>0</td>
+            </tr>
+            <tr data-player="Schnipke" data-fg-made="1" data-fg-att="8" data-3p-made="0" data-3p-att="6"
+                data-pts="3" data-reb="4" data-ast="7" data-stl="4" data-blk="0">
+                <td class="player-name">Schnipke</td>
+                <td>1&nbsp;/&nbsp;8</td>
+                <td>0&nbsp;/&nbsp;6</td>
+                <td>3</td>
+                <td>4</td>
+                <td>7</td>
+                <td>4</td>
+                <td>0</td>
+            </tr>
+            <tr data-player="Verhoff" data-fg-made="8" data-fg-att="13" data-3p-made="1" data-3p-att="1"
+                data-pts="17" data-reb="15" data-ast="1" data-stl="0" data-blk="0">
+                <td class="player-name">Verhoff</td>
+                <td>8&nbsp;/&nbsp;13</td>
+                <td>1&nbsp;/&nbsp;1</td>
+                <td>17</td>
+                <td>15</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr data-player="Niese" data-fg-made="3" data-fg-att="5" data-3p-made="2" data-3p-att="4"
+                data-pts="8" data-reb="3" data-ast="1" data-stl="2" data-blk="1">
+                <td class="player-name">Niese</td>
+                <td>3&nbsp;/&nbsp;5</td>
+                <td>2&nbsp;/&nbsp;4</td>
+                <td>8</td>
+                <td>3</td>
+                <td>1</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr data-player="Wagner" data-fg-made="4" data-fg-att="5" data-3p-made="2" data-3p-att="3"
+                data-pts="10" data-reb="4" data-ast="1" data-stl="1" data-blk="0">
+                <td class="player-name">Wagner</td>
+                <td>4&nbsp;/&nbsp;5</td>
+                <td>2&nbsp;/&nbsp;3</td>
+                <td>10</td>
+                <td>4</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr data-player="Inkrott" data-fg-made="7" data-fg-att="9" data-3p-made="2" data-3p-att="3"
+                data-pts="16" data-reb="8" data-ast="5" data-stl="0" data-blk="0">
+                <td class="player-name">Inkrott</td>
+                <td>7&nbsp;/&nbsp;9</td>
+                <td>2&nbsp;/&nbsp;3</td>
+                <td>16</td>
+                <td>8</td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr data-player="Gerschutz" data-fg-made="2" data-fg-att="12" data-3p-made="0" data-3p-att="4"
+                data-pts="4" data-reb="3" data-ast="0" data-stl="3" data-blk="0">
+                <td class="player-name">Gerschutz</td>
+                <td>2&nbsp;/&nbsp;12</td>
+                <td>0&nbsp;/&nbsp;4</td>
+                <td>4</td>
+                <td>3</td>
+                <td>0</td>
+                <td>3</td>
+                <td>0</td>
+            </tr>
+            <tr data-player="C. Verhoff" data-fg-made="1" data-fg-att="3" data-3p-made="0" data-3p-att="2"
+                data-pts="2" data-reb="0" data-ast="2" data-stl="2" data-blk="1">
+                <td class="player-name">C. Verhoff</td>
+                <td>1&nbsp;/&nbsp;3</td>
+                <td>0&nbsp;/&nbsp;2</td>
+                <td>2</td>
+                <td>0</td>
+                <td>2</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr data-player="Hopps" data-fg-made="1" data-fg-att="4" data-3p-made="1" data-3p-att="4"
+                data-pts="3" data-reb="3" data-ast="1" data-stl="2" data-blk="0">
+                <td class="player-name">Hopps</td>
+                <td>1&nbsp;/&nbsp;4</td>
+                <td>1&nbsp;/&nbsp;4</td>
+                <td>3</td>
+                <td>3</td>
+                <td>1</td>
+                <td>2</td>
+                <td>0</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>Team Totals</td>
+                <td>31&nbsp;/&nbsp;67</td>
+                <td>12&nbsp;/&nbsp;34</td>
+                <td>77</td>
+                <td>46</td>
+                <td>18</td>
+                <td>16</td>
+                <td>2</td>
+            </tr>
+            </tfoot>
+        </table>
+
+        <div id="playerDetail" class="detail-panel">
+            Click a player row to see a quick game summary.
+        </div>
+    </section>
+</div>
+
+<!-- Inline JavaScript -->
+<script>
+    (function () {
+        const table = document.getElementById("statsTable");
+        const bodyRows = Array.from(table.querySelectorAll("tbody tr"));
+        const toggleBtn = document.getElementById("toggleLeadersBtn");
+        const detailPanel = document.getElementById("playerDetail");
+
+        let leadersHighlighted = false;
+
+        function clearRowState() {
+            bodyRows.forEach(r => r.classList.remove("row-active"));
+        }
+
+        function buildSummary(row) {
+            const name = row.dataset.player;
+            const pts = row.dataset.pts;
+            const reb = row.dataset.reb;
+            const ast = row.dataset.ast;
+            const stl = row.dataset.stl;
+            const blk = row.dataset.blk;
+            const fgMade = row.dataset.fgMade;
+            const fgAtt = row.dataset.fgAtt;
+            const threeMade = row.dataset["3pMade"];
+            const threeAtt = row.dataset["3pAtt"];
+
+            const fgPct = fgAtt > 0 ? ((fgMade / fgAtt) * 100).toFixed(1) : "0.0";
+            const threePct = threeAtt > 0 ? ((threeMade / threeAtt) * 100).toFixed(1) : "0.0";
+
+            detailPanel.innerHTML =
+                `<span class="name">${name}</span> vs Ottawa: ` +
+                `${pts} pts, ${reb} reb, ${ast} ast, ${stl} stl, ${blk} blk &mdash; ` +
+                `shooting ${fgMade}-${fgAtt} FG (${fgPct}%), ${threeMade}-${threeAtt} 3PT (${threePct}%).`;
+        }
+
+        bodyRows.forEach(row => {
+            row.addEventListener("click", () => {
+                clearRowState();
+                row.classList.add("row-active");
+                buildSummary(row);
+            });
+        });
+
+        function computeLeaders() {
+            const categories = ["pts", "reb", "ast", "stl", "blk"];
+            const leaders = {};
+
+            categories.forEach(cat => {
+                let max = -Infinity;
+                bodyRows.forEach(row => {
+                    const val = parseInt(row.dataset[cat], 10) || 0;
+                    if (val > max) max = val;
+                });
+                leaders[cat] = max;
+            });
+
+            return leaders;
+        }
+
+        function toggleLeaders() {
+            const leaders = computeLeaders();
+            leadersHighlighted = !leadersHighlighted;
+
+            bodyRows.forEach(row => {
+                row.classList.remove("leaders-highlight");
+
+                if (!leadersHighlighted) return;
+
+                const isLeader =
+                    parseInt(row.dataset.pts, 10) === leaders.pts ||
+                    parseInt(row.dataset.reb, 10) === leaders.reb ||
+                    parseInt(row.dataset.ast, 10) === leaders.ast ||
+                    parseInt(row.dataset.stl, 10) === leaders.stl ||
+                    parseInt(row.dataset.blk, 10) === leaders.blk;
+
+                if (isLeader) {
+                    row.classList.add("leaders-highlight");
+                }
+            });
+
+            toggleBtn.textContent = leadersHighlighted
+                ? "Hide Stat Leaders"
+                : "Highlight Stat Leaders";
+        }
+
+        toggleBtn.addEventListener("click", toggleLeaders);
+    })();
+</script>
+</body>
+</html>
